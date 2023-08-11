@@ -1,11 +1,12 @@
 use std::collections::HashSet;
 use std::time::Instant;
+use num_format::{Locale, ToFormattedString};
 use rusqlite::Connection;
 
 fn main() {
     // ! CASE SENSITIVE
-    let starting_at = "Bedford";
-    let searching_for = "Obesity";
+    let starting_at = "Jake Paul";
+    let searching_for = "Danionella cerebrum";
 
     let start_time = Instant::now();
 
@@ -28,7 +29,12 @@ fn main() {
         'page_loop: for mut page in current_layer.into_iter() {
             count += 1;
             if count % 1000 == 0 {
-                println!("Pages searched: {} | Cache size: {} | Next layer size: {}", count, visited.len(), next_layer.len());
+                println!(
+                    "Pages searched: {} | Cache size: {} | Next layer size: {}",
+                    count.to_formatted_string(&Locale::en),
+                    visited.len().to_formatted_string(&Locale::en),
+                    next_layer.len().to_formatted_string(&Locale::en)
+                );
             }
 
             let links: String;

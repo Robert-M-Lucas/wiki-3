@@ -46,6 +46,13 @@ fn main() {
             break;
         }
 
+        for pattern in FORBIDDEN_PATTERNS {
+            if title.find(pattern).is_some() {
+                continue 'main_loop;
+            }
+        }
+
+
         let mut body = String::with_capacity(30);
         loop {
             let line = match lines.next() {
@@ -97,7 +104,7 @@ fn main() {
 
         count += 1;
         if count % 50_000 == 0 {
-            if (TOTAL_ARTICLES - count) > 0 {
+            if count < TOTAL_ARTICLES {
                 println!("Completed {} articles in {} [{:?}/article]. ETA: {}", count, start.elapsed().hhmmss(), start.elapsed() / count, ((start.elapsed() / count) * (TOTAL_ARTICLES - count)).hhmmss())
             }
             else {
@@ -264,14 +271,18 @@ impl DB {
 }
 
 const REDIRECT_TEXT: &str = "#REDIRECT [[";
-const FORBIDDEN_PATTERNS: [&str; 7] = [
+const FORBIDDEN_PATTERNS: [&str; 10] = [
     "Wikipedia:",
     "Category:",
     "File:",
     "Special:",
     "Template:",
     "Template_talk:",
-    "User:"
+    "User:",
+    "WP:",
+    "Help:",
+    "File:",
+    // "Portal:",
 ];
 
 const SEE_ALSO: &str = "==See also==";

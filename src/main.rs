@@ -1,9 +1,10 @@
 use std::collections::{HashSet, VecDeque};
 use std::collections::hash_map::DefaultHasher;
+use std::env;
 use std::hash::{Hash, Hasher};
 use std::ops::Deref;
 use std::rc::Rc;
-use std::time::{Duration, Instant};
+use std::time::Instant;
 use hhmmss::Hhmmss;
 use num_format::{Locale, ToFormattedString};
 use rusqlite::{Connection, Error};
@@ -13,12 +14,19 @@ use rusqlite::{Connection, Error};
 // Double Rc:  10.6M - 1.2GB
 
 fn main() {
-    // ! CASE SENSITIVE
-    let starting_at = "Defrocking";
-    let searching_for = "Sybra fuscotriangularis";
+    let args: Vec<String> = env::args().into_iter().collect();
 
-    // let starting_at = "Bedford";
-    // let searching_for = "Cancer";
+    // ! CASE SENSITIVE
+    // let starting_at = "Tobi 12";
+    // let searching_for = "xxINVALIDxx";
+
+    let (starting_at, searching_for) = if args.len() >= 3 {
+        (args[1].as_str(), args[2].as_str())
+    }
+    else {
+        ("Bedford", "Paul Singer (businessman)")
+    };
+
 
     let start_time = Instant::now();
 
@@ -64,6 +72,9 @@ fn main() {
 
     'main_loop: loop {
         let mut page = open_set.pop_front().unwrap();
+        if open_set.is_empty() {
+            println!("Last page: {}", page.to_str());
+        }
 
         count += 1;
         if count % 10_000 == 0 {
@@ -153,7 +164,7 @@ fn main() {
         }
     }
 
-    println!("Completed in {:?}", start_time.elapsed());
+    println!("Completed in {:?}", start_time.elapsed().hhmmssxxx());
 }
 
 #[derive(Clone)]

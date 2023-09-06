@@ -164,7 +164,14 @@ fn main() {
         }
     }
 
-    println!("Completed in {:?}", start_time.elapsed().hhmmssxxx());
+    println!("Completed in {}", start_time.elapsed().hhmmssxxx());
+    println!(
+        "Pages searched: {} [{:?}/page] | Cache size: {} | Open set size: {}",
+        count.to_formatted_string(&Locale::en),
+        start_time.elapsed() / count,
+        visited.len().to_formatted_string(&Locale::en),
+        open_set.len().to_formatted_string(&Locale::en),
+    );
 }
 
 #[derive(Clone)]

@@ -121,6 +121,8 @@ fn main() {
         }
     }
 
+    println!("Finding '{}' -> '{}'", starting_at, searching_for);
+
 
     let starting_page = PageHolder::from_page(Page::new(
         starting_at,

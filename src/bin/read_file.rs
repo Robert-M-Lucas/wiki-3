@@ -2,7 +2,7 @@ use std::fs::File;
 use std::io::{BufRead, BufReader};
 
 fn main() {
-    let file = File::open("enwiki-20230801-pages-articles.xml").unwrap();
+    let file = File::open("enwiki-20231101-pages-articles-multistream.xml").unwrap();
     let mut reader = BufReader::new(file);
 
     let mut i = i32::MAX;

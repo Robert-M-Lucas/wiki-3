@@ -13,3 +13,6 @@ hhmmss = "0.1.0"
 url-escape = "0.1.1"
 num-format = "0.4.4"
 tokio = "1.31.0"
+
+[profile.release]
+opt-level = 3

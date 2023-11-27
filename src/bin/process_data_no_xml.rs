@@ -8,7 +8,7 @@ use rusqlite::{Connection, ToSql};
 use rusqlite::types::{ToSqlOutput, ValueRef};
 
 fn main() {
-    let file = File::open("enwiki-20230801-pages-articles.xml").unwrap();
+    let file = File::open("enwiki-20231101-pages-articles-multistream.xml").unwrap();
     let reader = BufReader::new(file);
 
     let mut db = DB::new(1000, 100_000);
